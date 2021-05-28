@@ -1,11 +1,17 @@
 import os
 import random
+
 import discord
 from discord.ext import commands
 
-TOKEN = {BOT-TOKEN}
+from dotenv import load_dotenv
 
-bot = commands.Bot(command_prefix='!')
+load_dotenv('settings.env')
+TOKEN = os.getenv('DISCORD_TOKEN')
+
+intents = discord.Intents().all()
+
+bot = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.event
 async def on_ready():
@@ -16,7 +22,7 @@ async def on_ready():
 @bot.command(name="serverinfo", help="Muestra informacion sobre el servidor")
 async def serverinfo(ctx):
     cantroles = cantchannels = cantemojis = 0
-    owner = "none"
+    owner = "No funciona"
     for channel in ctx.guild.channels:
         cantchannels+=1
     for rol in ctx.guild.roles:
@@ -25,8 +31,7 @@ async def serverinfo(ctx):
         cantemojis+=1
     for member in ctx.guild.members:
         if member.id == ctx.guild.owner_id:
-            owner=member.display_name
-            break;
+            owner = member.display_name
     embed=discord.Embed(title="Informacion del Servidor", color=0x00bfff)
     embed.set_thumbnail(url=f"{ctx.guild.icon_url}")
     embed.add_field(name="Nombre", value=f"{ctx.guild.name}", inline=True)
