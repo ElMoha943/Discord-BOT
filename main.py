@@ -34,14 +34,18 @@ async def ping(ctx):
 
 @bot.command(name="quote", help="Quote random de ZenQuotes")
 async def quote(ctx):
+  try:
     response = requests.get("https://zenquotes.io/api/random")
     json_data = json.loads(response.text)
     quote = json_data[0]['q'] + " - " + json_data[0]['a']
     await ctx.send(quote)
+  except:
+    await ctx.send("**Error Inesperado**")
 
 
 @bot.command(name="serverinfo", help="Muestra informacion sobre el servidor")
 async def serverinfo(ctx):
+  try:
     cantroles = cantchannels = cantemojis = 0
     owner = "No funciona"
     for channel in ctx.guild.channels:
@@ -64,24 +68,32 @@ async def serverinfo(ctx):
     embed.add_field(name="Roles", value=f"{cantroles}", inline=True)
     embed.add_field(name="Emojis", value=f"{cantemojis}", inline=True)
     await ctx.send(embed=embed)
+  except:
+    await ctx.send("**Error inesperado**")
 
 
 @bot.command(name="roll", help="Tira un dado.")
 async def roll(ctx, amax, atimes):
+  try:
     times = int(atimes)
     max = int(amax)
     dice = [] * times
     for i in range(times):
         dice.append(str(random.choice(range(1, max + 1))))
     await ctx.send(dice)
+  except:
+    await ctx.send("**Error**: `!roll [caras] [dados]`")
 
 
 @bot.command(name="absolut", help="Devuelve el valor absoluto de un valor")
 async def absolut(ctx, valor):
+  try:
     valor = int(valor)
     if (valor < 0):
         valor = valor * -1
     await ctx.send(valor)
+  except:
+    await ctx.send("**Error**: `!absolut [number]`")
 
 
 @bot.command(name="color", help="Permite cambiar su color!")
@@ -103,7 +115,7 @@ async def color(ctx, ccolor):
         await author.add_roles(colorrol)
         await ctx.send("Color cambiado con exito")
     except:
-        await ctx.send("**Error**")
+        await ctx.send("**Error Inesperado**")
     #else:
     #   await ctx.send("Solo los nitro booster pueden cambiar su color")
 
