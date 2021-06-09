@@ -13,11 +13,20 @@ intents = discord.Intents().all()
 
 bot = commands.Bot(command_prefix='!', intents=intents)
 
+colors = {
+        "red": 0xff0000,
+        "blue": 0x00ff00,
+        }
+
 @bot.event
 async def on_ready():
     print(f"{bot.user} esta online! Lista de servidores:")
     for guild in bot.guilds:
         print(f"{guild.name}(id: {guild.id})")
+
+@bot.command(name="ping", help="Pong!")
+async def ping(ctx):
+    await ctx.send("Pong!")
 
 @bot.command(name="serverinfo", help="Muestra informacion sobre el servidor")
 async def serverinfo(ctx):
@@ -50,5 +59,39 @@ async def roll(ctx, amax, atimes):
     for i in range(times):
         dice.append(str(random.choice(range(1,max + 1))))
     await ctx.send(dice)
+
+@bot.command(name="absolut", help="Devuelve el valor absoluto de un valor")
+async def absolut(ctx, valor):
+    valor = int(valor)
+    if(valor < 0):
+        valor = valor * -1
+    await ctx.send(valor)
+
+@bot.command(name="color", help="Permite a los nitro booster cambiar su color!")
+async def color(ctx, ccolor):
+    author = ctx.message.author
+    guild = ctx.guild
+    if author.premium_since != None:
+        try:
+            for rol in guild.roles:
+                if rol.name == author.name:
+                    colorrol = rol
+                    flag = 1
+            if flag == 0:
+                await guild.create_role(name=author.name, colour=colors.get(ccolor))
+                for rol in guild.roles:
+                    if rol.name == author.name:
+                        colorrol = rol
+            await ctx.author.add_roles(colorrol)
+            await ctx.send("Color cambiado con exito")
+        except Forbidden:
+            await ctx.send("**Error**: No tienes permiso ejecutar este comando")
+        except HTTPException:
+            await ctx.send("**Error**: Ocurrio un error al crear el rol :thinking:")
+        except InvalidArgument:
+            await ctx.send("**Error**: uso correcto `!color {colour}`/n" + colors)
+    else:
+        await ctx.send("Solo los nitro booster pueden cambiar su color")
+
 
 bot.run(TOKEN)
