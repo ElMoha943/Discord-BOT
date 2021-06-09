@@ -17,6 +17,8 @@ Apis utilizadas:
 - ServerInfo
 - Quote
 - Color
+- Roll
+- Absolut
 
 ### Eventos
 
