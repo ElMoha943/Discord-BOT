@@ -1,9 +1,11 @@
 # Discord-BOT
-Bot basico programado en python
+Bot basico programado en python.
 
-El objetivo principal de este proyecto es trabajar con distintas APIs. Tambien trato de incorporar nuevas estructuras que voy aprendiendo. Se aceptan sugerencias de funcionalidades para agregar.
+El objetivo principal de este proyecto es trabajar con distintas APIs. Tambien trato de incorporar nuevas estructuras que voy aprendiendo. Se aceptan sugerencias de funcionalidades para agregar. <b>No es un bot para uso, es simplemente para testeos.</b>
 <br>
-Bot y Database hosteados en [Replit](https://replit.com/). El webserver esta hecho con Flask.
+<br>
+Bot y Database hosteados en [Replit](https://replit.com/).
+<br>
 <br>
 Apis utilizadas:
 - [Discord.py](https://discordpy.readthedocs.io)
