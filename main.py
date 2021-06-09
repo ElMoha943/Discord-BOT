@@ -5,6 +5,8 @@ import requests
 import json
 from discord.ext import commands
 from dotenv import load_dotenv
+from keep_alive import keep_alive
+
 
 load_dotenv('settings.env')
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -101,5 +103,5 @@ async def color(ctx, ccolor):
     else:
         await ctx.send("Solo los nitro booster pueden cambiar su color")
 
-
+keep_alive()
 bot.run(TOKEN)
