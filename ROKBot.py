@@ -1,9 +1,9 @@
+import discord
 import os
 import random
-
-import discord
+import requests
+import json
 from discord.ext import commands
-
 from dotenv import load_dotenv
 
 load_dotenv('settings.env')
@@ -15,7 +15,8 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 
 colors = {
         "red": 0xff0000,
-        "blue": 0x00ff00,
+        "blue": 0x0000ff,
+        "green": 0x00ff00,
         }
 
 @bot.event
@@ -27,6 +28,13 @@ async def on_ready():
 @bot.command(name="ping", help="Pong!")
 async def ping(ctx):
     await ctx.send("Pong!")
+
+@bot.command(name="quote", help="Quote random de ZenQuotes")
+async def ping(ctx):
+    response = requests.get("https://zenquotes.io/api/random")
+    json_data = json.loads(response.text)
+    quote = json_data[0]['q'] + " - " + json_data[0]['a']
+    await ctx.send(quote)
 
 @bot.command(name="serverinfo", help="Muestra informacion sobre el servidor")
 async def serverinfo(ctx):
